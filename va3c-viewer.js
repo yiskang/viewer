@@ -47,7 +47,7 @@
 		VA3C.camera.position.set( 15000, 15000, 15000 );
 		VA3C.controls = new THREE.OrbitControls( VA3C.camera, VA3C.renderer.domElement );
 
-		projector = new THREE.Projector();
+		//projector = new THREE.Projector();
 		document.addEventListener( 'click', clickHandler, false );
 
 		loadJS( fname );
@@ -326,18 +326,17 @@
 
 
         var vector = new THREE.Vector3( ( event.clientX / window.innerWidth ) * 2 - 1, - ( event.clientY / window.innerHeight ) * 2 + 1, 0.5 );
-        projector.unprojectVector( vector, VA3C.camera );
+        var mouse = new THREE.Vector2(); // create once
 
-        var raycaster = new THREE.Raycaster( VA3C.camera.position, vector.sub( VA3C.camera.position ).normalize() );
-        //var raycaster = new THREE.Raycaster( VA3C.camera.position, vector.sub( ).normalize() );
+        mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+        var raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera( mouse, VA3C.camera );
 
         var intersects = raycaster.intersectObjects( targetList );
-        //var intersects = raycaster.intersectObjects( VA3C.scene.children.geometry );
 
         if ( intersects.length > 0 ) {
-
-         //   intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-         //console.log(intersects[0].object.userData);
 
          var j =0;
          while(j<intersects.length){
